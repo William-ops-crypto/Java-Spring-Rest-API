@@ -36,9 +36,12 @@ public class EntregaController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public EntregaModel solicitar(@Valid @RequestBody Entrega entrega) {
+	public EntregaModel solicitar(@Valid @RequestBody Entrega entregaInput) {
+		Entrega novaEntrega = entregaAssembler.toEntity(entregaInput);
+		Entrega entregaSolicitada = solicitacaoEntregaService.solicitar(novaEntrega);
 		
-		return entregaAssembler.toModel(solicitacaoEntregaService.solicitar(entrega));
+		
+		return entregaAssembler.toModel(entregaSolicitada);
 		
 		
 	}
